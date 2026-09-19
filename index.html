@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Gramado Explorer - guia turístico interativo de Gramado, RS."
+    />
+    <title>Gramado Explorer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="loadingOverlay" class="loading-overlay" aria-live="polite">
+      <div class="loading-spinner" aria-hidden="true"></div>
+      <span>Carregando pontos turísticos...</span>
+    </div>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-wrap" aria-label="Gramado Explorer">
+          <div class="brand-mark" aria-hidden="true">G</div>
+          <div class="brand-text">
+            <h1>Gramado Explorer</h1>
+            <p>Descubra os encantos de Gramado</p>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <label class="search-wrap" aria-label="Buscar atrações">
+            <span class="search-icon" aria-hidden="true">🔎</span>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Buscar atrações..."
+              aria-label="Pesquisar pontos turísticos"
+            />
+          </label>
+
+          <button
+            id="mobileSidebarToggle"
+            class="mobile-toggle"
+            type="button"
+            aria-label="Abrir ou fechar lista de atrações"
+          >
+            ☰
+          </button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <aside id="sidebar" class="sidebar" aria-label="Painel lateral de atrações">
+          <div class="sidebar-header">
+            <h2>Explorar Gramado</h2>
+          </div>
+
+          <nav class="category-filters" aria-label="Filtros por categoria">
+            <button class="filter-btn active" type="button" data-category="todos">
+              📍 Todos
+            </button>
+            <button class="filter-btn" type="button" data-category="cultura">
+              🏛️ Cultura
+            </button>
+            <button class="filter-btn" type="button" data-category="natureza">
+              🌳 Natureza
+            </button>
+            <button class="filter-btn" type="button" data-category="gastronomia">
+              🍫 Gastronomia
+            </button>
+            <button class="filter-btn" type="button" data-category="lazer">
+              🎡 Lazer
+            </button>
+            <button class="filter-btn" type="button" data-category="arquitetura">
+              ⛪ Arquitetura
+            </button>
+          </nav>
+
+          <div class="list-header">
+            <h3>Atrações</h3>
+            <span id="resultsCount" class="results-count">0</span>
+          </div>
+
+          <div id="touristList" class="tourist-list" aria-live="polite"></div>
+        </aside>
+
+        <section class="map-panel" aria-label="Mapa turístico de Gramado">
+          <div id="map" aria-label="Mapa interativo de Gramado"></div>
+
+          <div class="map-actions" aria-label="Ações do mapa">
+            <button id="centerMapBtn" type="button" class="map-action-btn">
+              📍 Centro de Gramado
+            </button>
+            <button id="userLocationBtn" type="button" class="map-action-btn secondary">
+              📍 Minha localização
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <div id="touristModal" class="modal" aria-hidden="true">
+      <div class="modal-backdrop" data-close-modal="true"></div>
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <button id="closeModalBtn" class="modal-close" type="button" aria-label="Fechar detalhes">
+          ×
+        </button>
+
+        <img
+          id="modalImage" src=""
+          alt="Imagem do ponto turístico"
+          class="modal-image"
+        />
+
+        <div class="modal-content">
+          <span id="modalCategory" class="modal-category"></span>
+          <h3 id="modalTitle">Nome do ponto</h3>
+          <p id="modalDescription" class="modal-description"></p>
+          <div class="modal-meta">
+            <span id="modalLocation" class="modal-location"></span>
+          </div>
+
+          <div class="modal-actions">
+            <button id="modalFocusBtn" type="button" class="primary-btn">
+              Mostrar no mapa
+            </button>
+            <button id="modalCloseBtn" type="button" class="secondary-btn">
+              Fechar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="app.js"></script>
+  </body>
+</html>
